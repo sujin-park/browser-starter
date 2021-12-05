@@ -2,10 +2,14 @@ name: Create Issue Customize
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: 0,5,10,15,20,25,30,35,40,45,50,55 * * * *
 
 jobs:
   create-issue-customize:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
       - uses: actions/github-script@v5
         with:
@@ -16,6 +20,7 @@ jobs:
               creator,
               state: 'all'
             })
+
             const issues = await github.paginate(opts)
 
             for (const issue of issues) {
