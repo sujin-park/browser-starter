@@ -2,8 +2,6 @@ name: Create Issue Customize
 
 on:
   workflow_dispatch:
-  schedule:
-      - cron: "/5 * * * *"
 
 jobs:
   create-issue-customize:
