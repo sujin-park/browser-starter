@@ -1,6 +1,7 @@
 name: Create Issue Customize
 
 on:
+  workflow_dispatch:
   schedule:
       - cron: "5 * * * *"
 
@@ -32,5 +33,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '### Weekly Todo'
+              title: '이슈 타이틀',
+              body: '### Weekly Todo',
+              assignees: ['sujin-park']
             })
