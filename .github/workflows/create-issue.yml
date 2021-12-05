@@ -1,0 +1,28 @@
+name: Create Issue
+
+on:
+  schedule:
+      - cron: "5 * * * *"
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Create Issue for weekly todo
+        uses: imjohnbo/issue-bot@v3
+        with:
+          assignees: "sujin-park"
+          labels: "Feature"
+          title: "Weekly Todo"
+          body: |
+            ### Agenda
+
+            - [ ] project setup
+            - [ ] xxx
+
+          pinned: false
+          close-previous: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
