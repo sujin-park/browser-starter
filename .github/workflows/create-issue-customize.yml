@@ -1,0 +1,37 @@
+name: Create Issue
+
+on:
+  schedule:
+      - cron: "5 * * * *"
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v5
+        with:
+          script: |
+          const creator = context.payload.sender.login
+          const opts = github.rest.issues.listForRepo.endpoint.merge({
+            ...context.issue,
+            creator,
+            state: 'all'
+          })
+          const issues = await github.paginate(opts)
+
+          for (const issue of issues) {
+            if (issue.number === context.issue.number) {
+              continue
+            }
+
+            if (issue.pull_request) {
+              return
+            }
+          }
+
+          await github.rest.issues.create({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '### Weekly Todo'
+          })
