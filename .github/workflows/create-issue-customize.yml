@@ -3,7 +3,7 @@ name: Create Issue Customize
 on:
   workflow_dispatch:
   schedule:
-      - cron: "5 * * * *"
+      - cron: "/3 * * * *"
 
 jobs:
   create-issue-customize:
@@ -12,6 +12,7 @@ jobs:
       - uses: actions/github-script@v5
         with:
           script: |
+            const creator = context.payload.sender.login
             const opts = github.rest.issues.listForRepo.endpoint.merge({
               ...context.issue,
               creator,
